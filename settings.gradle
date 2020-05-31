@@ -1,2 +1,4 @@
 rootProject.name='zhulong'
 include ':app'
+include ':frame'
+include ':data'

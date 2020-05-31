@@ -4,13 +4,20 @@ package com.hdj.zhulong;
 import android.content.Intent;
 
 import com.hdj.base.BaseActivity;
+import com.hdj.base.BaseMvpActivity;
+import com.hdj.frame.MyModel;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseMvpActivity {
 
     int count = 2;
+
+    @Override
+    protected MyModel initModel() {
+        return new MyModel();
+    }
 
     @Override
     protected void initData() {
@@ -35,5 +42,15 @@ public class MainActivity extends BaseActivity {
     @Override
     protected int getLayout() {
         return R.layout.activity_main;
+    }
+
+    @Override
+    protected void netSuccess(int whichApi, Object[] params) {
+
+    }
+
+    @Override
+    protected void netFailed(int whichApi, Throwable throwable) {
+
     }
 }
