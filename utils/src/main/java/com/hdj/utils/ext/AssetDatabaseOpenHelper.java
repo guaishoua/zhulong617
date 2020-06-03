@@ -78,7 +78,7 @@ public class AssetDatabaseOpenHelper {
 
     private void copyDatabase(File dbFile) throws IOException {
         InputStream stream = context.getAssets().open(databaseName);
-        com.yiyatech.utils.ext.FileUtils.writeFile(dbFile, stream);
+        com.hdj.utils.ext.FileUtils.writeFile(dbFile, stream);
         stream.close();
     }
 }

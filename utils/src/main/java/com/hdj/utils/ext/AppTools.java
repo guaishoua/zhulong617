@@ -39,7 +39,7 @@ public class AppTools {
 			intent2.setData(Uri.parse("tel:" + mobile));
 			context.startActivity(intent2);
 		} else {
-			com.yiyatech.utils.ext.ToastUtils.show(context, "未提供手机号!");
+			com.hdj.utils.ext.ToastUtils.show(context, "未提供手机号!");
 		}
 	}
 	/** 调用短信 */

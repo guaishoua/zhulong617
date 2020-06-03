@@ -2,6 +2,7 @@ package com.hdj.frame;
 
 import android.app.Application;
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.hdj.data.Device;
 import com.hdj.data.LoginInfo;
@@ -14,7 +15,7 @@ public class FrameApplication extends UtilsApplication {
     private Device mDeviceInfo;
     private LoginInfo mLoginInfo;
     private String cookie;
-    private  SpecialtyChooseEntity.DataBean selectedInfo;
+    private SpecialtyChooseEntity.DataBean selectedInfo;
 
     public SpecialtyChooseEntity.DataBean getSelectedInfo() {
         return selectedInfo;
@@ -30,6 +31,10 @@ public class FrameApplication extends UtilsApplication {
 
     public void setCookie(String cookie) {
         this.cookie = cookie;
+    }
+
+    public boolean isLogin() {
+        return mLoginInfo != null && !TextUtils.isEmpty(mLoginInfo.getUid());
     }
 
     public LoginInfo getLoginInfo() {
@@ -54,11 +59,11 @@ public class FrameApplication extends UtilsApplication {
         application = this;
     }
 
-    public static FrameApplication getFrameApplication(){
+    public static FrameApplication getFrameApplication() {
         return application;
     }
 
-    public static Context getFrameApplicationContext(){
+    public static Context getFrameApplicationContext() {
         return application.getApplicationContext();
     }
 }

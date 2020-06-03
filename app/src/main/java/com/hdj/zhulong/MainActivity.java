@@ -3,9 +3,8 @@ package com.hdj.zhulong;
 
 import android.content.Intent;
 
-import com.hdj.base.BaseActivity;
 import com.hdj.base.BaseMvpActivity;
-import com.hdj.frame.MyModel;
+import com.hdj.model.MyModel;
 
 import java.util.Timer;
 import java.util.TimerTask;

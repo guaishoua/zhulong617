@@ -1,5 +1,7 @@
 package com.hdj.frame;
 
+import io.reactivex.disposables.Disposable;
+
 public interface IContract {
     interface IView<T>{
         void onSuccess(int whichApi,T... params);
@@ -7,6 +9,7 @@ public interface IContract {
     }
 
     interface IPresenter<P> extends IView{
+        void addObserver(Disposable pDisposable);
         void getData(int whichApi,P...p);
     }
     interface IModel<T>{

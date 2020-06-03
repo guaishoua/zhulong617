@@ -97,7 +97,7 @@ public class StringUtil {
     }
 
     private static boolean checkString(String text, String nullText, String errorText, int types) {
-        if (com.yiyatech.utils.EmptyUtil.isEmpty(text)) {
+        if (com.hdj.utils.EmptyUtil.isEmpty(text)) {
             return false;
         }
         switch (types) {

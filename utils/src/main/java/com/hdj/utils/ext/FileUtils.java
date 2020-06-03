@@ -1,4 +1,4 @@
-package com.yiyatech.utils.ext;
+package com.hdj.utils.ext;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

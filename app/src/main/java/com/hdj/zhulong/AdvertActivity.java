@@ -1,30 +1,34 @@
 package com.hdj.zhulong;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.graphics.Point;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.bumptech.glide.Glide;
-import com.hdj.base.BaseActivity;
-import com.hdj.base.BaseMvpActivity;
+import com.hdj.base.BaseSplashActivity;
+import com.hdj.constans.ConstantKey;
 import com.hdj.data.AdvertBean;
+import com.hdj.data.SpecialtyChooseEntity;
 import com.hdj.frame.ApiConfig;
-import com.hdj.frame.MyModel;
+import com.hdj.model.MyModel;
+import com.hdj.secret.SystemUtils;
+import com.hdj.utils.newAdd.SharedPrefrenceUtils;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class AdvertActivity extends BaseMvpActivity {
+public class AdvertActivity extends BaseSplashActivity {
 
     private ImageView iv_advert;
     private Button click;
     int count = 5;
     private Timer timer;
+    private SpecialtyChooseEntity.DataBean mSelectedInfo;
 
     @Override
     protected MyModel initModel() {
@@ -33,6 +37,13 @@ public class AdvertActivity extends BaseMvpActivity {
 
     @Override
     protected void initData() {
+        mSelectedInfo = SharedPrefrenceUtils.getObject(this, ConstantKey.SUBJECT_SELECT);
+        String specialtyId = "";
+        if (mSelectedInfo != null && !TextUtils.isEmpty(mSelectedInfo.getSpecialty_id())) {
+            mApplication.setSelectedInfo(mSelectedInfo);
+            specialtyId = mSelectedInfo.getSpecialty_id();
+        }
+        Point realSize = SystemUtils.getRealSize(this);
         myPresenter.getData(ApiConfig.TEST_POST,"APP_QD_01","0");
 
     }
@@ -41,7 +52,8 @@ public class AdvertActivity extends BaseMvpActivity {
     protected void initView() {
         iv_advert = (ImageView) findViewById(R.id.iv_advert);
         click = (Button) findViewById(R.id.click);
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        initDevice();
         timer = new Timer();
 
         timer.schedule(new TimerTask() {
@@ -56,8 +68,7 @@ public class AdvertActivity extends BaseMvpActivity {
                 });
 
                 if (count == 1) {
-                    startActivity(new Intent(AdvertActivity.this,HomeActivity.class));
-                    finish();
+                    jump();
                 }
             }
         }, 0, 1000);
@@ -66,9 +77,20 @@ public class AdvertActivity extends BaseMvpActivity {
             public void onClick(View v) {
                 startActivity(new Intent(AdvertActivity.this,HomeActivity.class));
                 timer.cancel();
-                finish();
+                jump();
             }
         });
+    }
+
+
+
+    private void jump() {
+        startActivity(new Intent(this,mSelectedInfo != null && !TextUtils.isEmpty(mSelectedInfo.getSpecialty_id()) ? mApplication.isLogin() ? HomeActivity.class : LoginActivity.class : SubjectActivity.class ));
+        finish();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override

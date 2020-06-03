@@ -73,7 +73,7 @@ public class StringUtils {
      * @see ObjectUtils#isEquals(Object, Object)
      */
     public static boolean isEquals(String actual, String expected) {
-        return com.yiyatech.utils.ext.ObjectUtils.isEquals(actual, expected);
+        return com.hdj.utils.ext.ObjectUtils.isEquals(actual, expected);
     }
 
     /**

@@ -1,4 +1,7 @@
-package com.yiyatech.utils.ext;
+package com.hdj.utils.ext;
+
+import com.hdj.utils.ext.MapUtils;
+import com.hdj.utils.ext.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

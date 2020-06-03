@@ -3,8 +3,11 @@ package com.hdj.frame;
 
 
 import com.hdj.data.AdvertBean;
+import com.hdj.data.BaseInfo;
+import com.hdj.data.SpecialtyChooseEntity;
 
 import java.util.HashMap;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -21,4 +24,8 @@ public interface ApiService {
     @POST("openapi/ad/getAd")
     @FormUrlEncoded
     Observable<AdvertBean> getAdvertData(@Field("positions_id")String positions_id, @Field("is_show")String is_show);
+
+
+    @GET("lesson/getAllspecialty")
+    Observable<BaseInfo<List<SpecialtyChooseEntity>>> getSubjectList();
 }

@@ -21,7 +21,7 @@ import android.view.Display;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import com.yiyatech.utils.newAdd.SharedPrefrenceUtils;
+import com.hdj.utils.newAdd.SharedPrefrenceUtils;
 
 import java.io.File;
 import java.lang.reflect.Field;

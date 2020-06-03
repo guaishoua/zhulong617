@@ -18,8 +18,7 @@ import com.bumptech.glide.request.target.Target;
 import com.hdj.utils.R;
 import com.hdj.utils.UtilsApplication;
 import com.hdj.utils.glide_transformation.BlurTransformation;
-
-import com.yiyatech.utils.glide_transformation.CornerTransform;
+import com.hdj.utils.glide_transformation.CornerTransform;
 
 
 public class GlideUtil {

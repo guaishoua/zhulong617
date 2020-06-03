@@ -7,7 +7,7 @@ import com.hdj.frame.FrameApplication;
 
 
 
-public class Application1907 extends Application {
+public class Application1907 extends FrameApplication {
     private static Application1907 mApplication1907;
     @Override
     public void onCreate() {
@@ -22,4 +22,6 @@ public class Application1907 extends Application {
     public static Context get07ApplicationContext(){
         return mApplication1907.getApplicationContext();
     }
+
+
 }

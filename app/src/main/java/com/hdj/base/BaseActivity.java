@@ -9,10 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.hdj.zhulong.R;
 
 public class BaseActivity extends AppCompatActivity {
+    public Application1907 mApplication;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mApplication = (Application1907) getApplication();
     }
-
 }
