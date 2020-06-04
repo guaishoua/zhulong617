@@ -6,7 +6,7 @@ import com.hdj.frame.IContract;
 import com.hdj.frame.MyPresenter;
 import com.hdj.model.MyModel;
 
-public abstract class BaseMvpActivity<M extends MyModel> extends BaseActivity implements IContract.IView {
+public abstract class BaseMvpActivity<M extends IContract.IModel> extends BaseActivity implements IContract.IView {
     private M model;
     public MyPresenter myPresenter;
 

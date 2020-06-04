@@ -8,9 +8,7 @@ import com.hdj.utils.ext.ToastUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by 任小龙 on 2020/3/20.
- */
+
 public class RegexUtil {
     public static boolean isPhone(String name) {
         Pattern p = Pattern.compile("^1[3,4,5,6,7,8,9]\\d{9}$");

@@ -1,5 +1,6 @@
 package com.hdj.zhulong;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,7 +35,8 @@ public class SubjectActivity extends BaseMvpActivity<MyModel> {
     @BindView(R.id.title_content)
     TextView titleContent;
     private SubjectAdapter mAdapter;
-
+    @BindView(R.id.more_content)
+    TextView moreContent;
     private List<SpecialtyChooseEntity> mListData = new ArrayList<>();
 
     @Override
@@ -45,9 +47,9 @@ public class SubjectActivity extends BaseMvpActivity<MyModel> {
     @Override
     protected void initData() {
         if (SharedPrefrenceUtils.getSerializableList(this, ConstantKey.SUBJECT_LIST) != null) {
-            mListData.addAll( SharedPrefrenceUtils.getSerializableList(this, ConstantKey.SUBJECT_LIST));
+            mListData.addAll(SharedPrefrenceUtils.getSerializableList(this, ConstantKey.SUBJECT_LIST));
             mAdapter.notifyDataSetChanged();
-        } else{
+        } else {
             myPresenter.getData(ApiConfig.SUBJECT);
         }
 
@@ -59,6 +61,13 @@ public class SubjectActivity extends BaseMvpActivity<MyModel> {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new SubjectAdapter(mListData, this);
         recyclerView.setAdapter(mAdapter);
+        moreContent.setText("完成");
+        moreContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SubjectActivity.this, mApplication.isLogin() ? HomeActivity.class : LoginActivity.class));
+            }
+        });
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +91,7 @@ public class SubjectActivity extends BaseMvpActivity<MyModel> {
                 BaseInfo<List<SpecialtyChooseEntity>> info = (BaseInfo<List<SpecialtyChooseEntity>>) params[0];
                 mListData.addAll(info.result);
                 mAdapter.notifyDataSetChanged();
-                SharedPrefrenceUtils.putSerializableList(this,ConstantKey.SUBJECT_LIST,mListData);
+                SharedPrefrenceUtils.putSerializableList(this, ConstantKey.SUBJECT_LIST, mListData);
                 break;
         }
     }
@@ -90,7 +99,7 @@ public class SubjectActivity extends BaseMvpActivity<MyModel> {
     @Override
     protected void onStop() {
         super.onStop();
-        SharedPrefrenceUtils.putObject(this,ConstantKey.SUBJECT_SELECT,mApplication.getSelectedInfo());
+        SharedPrefrenceUtils.putObject(this, ConstantKey.SUBJECT_SELECT, mApplication.getSelectedInfo());
     }
 
     @Override

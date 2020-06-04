@@ -4,10 +4,15 @@ import com.hdj.data.Device;
 import com.hdj.frame.FrameApplication;
 import com.hdj.secret.SystemUtils;
 import com.hdj.utils.NetworkUtils;
+import com.hdj.zhulong.R;
 
 public abstract class BaseSplashActivity extends BaseMvpActivity {
 
 
+    @Override
+    protected int getLayout() {
+        return R.layout.activity_advert;
+    }
 
     public void initDevice() {
         Device device = new Device();

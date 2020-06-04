@@ -1,6 +1,7 @@
 package com.hdj.model;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.hdj.base.Application1907;
 import com.hdj.data.AdvertBean;
@@ -8,6 +9,7 @@ import com.hdj.frame.ApiConfig;
 import com.hdj.frame.ApiService;
 import com.hdj.frame.IContract;
 import com.hdj.frame.NetManger;
+import com.hdj.util.ParamHashMap;
 import com.hdj.zhulong.R;
 
 import io.reactivex.Observer;
@@ -29,36 +31,9 @@ public class MyModel implements IContract.IModel {
     public void getData(final IContract.IPresenter presenter, final int whichApi, Object[] params) {
         switch (whichApi) {
             case ApiConfig.TEST_POST:
-                new Retrofit.Builder()
-                        .baseUrl(ApiService.url)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                        .client(new OkHttpClient())
-                        .build().create(ApiService.class)
-                        .getAdvertData((String) params[0], (String) params[1])
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<AdvertBean>() {
-                            @Override
-                            public void onSubscribe(Disposable d) {
-
-                            }
-
-                            @Override
-                            public void onNext(AdvertBean advertBean) {
-                                presenter.onSuccess(whichApi, advertBean);
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                presenter.onFailed(whichApi, e);
-                            }
-
-                            @Override
-                            public void onComplete() {
-
-                            }
-                        });
+                ParamHashMap map = new ParamHashMap().add("w", params[1]).add("h", params[2]).add("positions_id", "APP_QD_01").add("is_show", 0);
+                if (!TextUtils.isEmpty((String) params[0])) map.add("specialty_id", params[0]);
+                mManger.netWork(mManger.getService(mContext.getString(R.string.ad_openapi)).getAdvertData(map), presenter, whichApi);
                 break;
             case ApiConfig.SUBJECT:
                 mManger.netWork(mManger.getService(mContext.getString(R.string.edu_openapi)).getSubjectList(), presenter, whichApi);
