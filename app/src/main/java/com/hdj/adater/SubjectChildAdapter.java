@@ -19,7 +19,7 @@ import com.hdj.zhulong.R;
 import java.util.List;
 
 
-public class SubjectChildAdapter extends RecyclerView.Adapter<SubjectChildAdapter.ViewHolder> {
+public class    SubjectChildAdapter extends RecyclerView.Adapter<SubjectChildAdapter.ViewHolder> {
     private List<SpecialtyChooseEntity.DataBean> data;
     private Context mContext;
     private SubjectAdapter fatherAdapter;
@@ -47,7 +47,8 @@ public class SubjectChildAdapter extends RecyclerView.Adapter<SubjectChildAdapte
             holder.label.setBackground(ContextCompat.getDrawable(mContext, R.drawable.shape_radius_white_bg));
         }
         holder.label.setOnClickListener(v -> {
-            FrameApplication.getFrameApplication().setSelectedInfo(data.get(position));
+            SpecialtyChooseEntity.DataBean dataBean = data.get(position);
+            FrameApplication.getFrameApplication().setSelectedInfo(dataBean);
             fatherAdapter.notifyDataSetChanged();
         });
     }

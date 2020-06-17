@@ -25,6 +25,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.hdj.contants.JumpConstant.*;
+
 public class SubjectActivity extends BaseMvpActivity<MyModel> {
 
 
@@ -38,6 +40,7 @@ public class SubjectActivity extends BaseMvpActivity<MyModel> {
     @BindView(R.id.more_content)
     TextView moreContent;
     private List<SpecialtyChooseEntity> mListData = new ArrayList<>();
+    private String mFrom;
 
     @Override
     protected MyModel initModel() {
@@ -57,6 +60,7 @@ public class SubjectActivity extends BaseMvpActivity<MyModel> {
 
     @Override
     protected void initView() {
+        mFrom = getIntent().getStringExtra(JUMP_KEY);
         titleContent.setText(getString(R.string.select_subject));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new SubjectAdapter(mListData, this);
@@ -65,7 +69,18 @@ public class SubjectActivity extends BaseMvpActivity<MyModel> {
         moreContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SubjectActivity.this, mApplication.isLogin() ? HomeActivity.class : LoginActivity.class));
+                if (mApplication.getSelectedInfo() == null){
+                    showToast("请选择专业");
+                    return;
+                }
+                if(mFrom.equals(SPLASH_TO_SUB)){
+                    if(mApplication.isLogin()){
+                        startActivity(new Intent(SubjectActivity.this,HomeActivity.class));
+                    }else {
+                        startActivity(new Intent(SubjectActivity.this,LoginActivity.class).putExtra(JUMP_KEY,SUB_TO_LOGIN));
+                    }
+                }
+                finish();
             }
         });
         ivBack.setOnClickListener(new View.OnClickListener() {
@@ -76,8 +91,6 @@ public class SubjectActivity extends BaseMvpActivity<MyModel> {
         });
     }
 
-    public SubjectActivity() {
-    }
 
     @Override
     protected int getLayout() {

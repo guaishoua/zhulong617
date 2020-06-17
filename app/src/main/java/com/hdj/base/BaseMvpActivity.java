@@ -6,6 +6,8 @@ import com.hdj.frame.IContract;
 import com.hdj.frame.MyPresenter;
 import com.hdj.model.MyModel;
 
+import butterknife.ButterKnife;
+
 public abstract class BaseMvpActivity<M extends IContract.IModel> extends BaseActivity implements IContract.IView {
     private M model;
     public MyPresenter myPresenter;
@@ -14,7 +16,7 @@ public abstract class BaseMvpActivity<M extends IContract.IModel> extends BaseAc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
-        butterknife.ButterKnife.bind(this);
+        ButterKnife.bind(this);
         model = initModel();
         myPresenter = new MyPresenter(this, model);
         initView();

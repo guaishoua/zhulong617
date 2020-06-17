@@ -24,6 +24,6 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void showToast(Object content) {
-//        Toast.makeText(getApplicationContext(), content.toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), content.toString(), Toast.LENGTH_SHORT).show();
     }
 }

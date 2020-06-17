@@ -16,9 +16,6 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by 任小龙 on 2019/12/19.
- */
 public class NetManger {
     private NetManger() {
     }
@@ -52,6 +49,8 @@ public class NetManger {
                 .build()
                 .create(ApiService.class);
     }
+
+
 
     private OkHttpClient initClient() {
         return new OkHttpClient().newBuilder()

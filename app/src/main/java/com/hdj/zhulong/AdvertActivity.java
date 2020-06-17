@@ -12,10 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.hdj.base.Application1907;
 import com.hdj.base.BaseSplashActivity;
 import com.hdj.constans.ConstantKey;
 import com.hdj.data.AdvertBean;
 import com.hdj.data.BaseInfo;
+import com.hdj.data.LoginInfo;
 import com.hdj.data.MainAdEntity;
 import com.hdj.data.SpecialtyChooseEntity;
 import com.hdj.frame.ApiConfig;
@@ -24,8 +26,14 @@ import com.hdj.secret.SystemUtils;
 import com.hdj.utils.newAdd.GlideUtil;
 import com.hdj.utils.newAdd.SharedPrefrenceUtils;
 
+import java.io.Serializable;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+
+import static com.hdj.contants.JumpConstant.*;
 
 public class AdvertActivity extends BaseSplashActivity {
 
@@ -49,8 +57,9 @@ public class AdvertActivity extends BaseSplashActivity {
             specialtyId = mSelectedInfo.getSpecialty_id();
         }
         Point realSize = SystemUtils.getRealSize(this);
-        myPresenter.getData(ApiConfig.TEST_POST,specialtyId,realSize.x,realSize.y);
-
+        myPresenter.getData(ApiConfig.TEST_POST, specialtyId, realSize.x, realSize.y);
+        LoginInfo object = SharedPrefrenceUtils.getObject(this, ConstantKey.LOGIN_INFO);
+        if (object != null) Application1907.getFrameApplication().setLoginInfo(object);
     }
 
 
@@ -63,14 +72,14 @@ public class AdvertActivity extends BaseSplashActivity {
         time_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AdvertActivity.this,HomeActivity.class));
+                startActivity(new Intent(AdvertActivity.this, HomeActivity.class));
                 timer.cancel();
                 jump();
             }
         });
     }
 
-    private void goTime(){
+    private void goTime() {
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -90,8 +99,18 @@ public class AdvertActivity extends BaseSplashActivity {
     }
 
     private void jump() {
-        startActivity(new Intent(this,mSelectedInfo != null && !TextUtils.isEmpty(mSelectedInfo.getSpecialty_id()) ? mApplication.isLogin() ? HomeActivity.class : LoginActivity.class : SubjectActivity.class ));
-        finish();
+        Observable.just("我是防抖动").debounce(20, TimeUnit.MILLISECONDS).subscribe(p -> {
+            if (mSelectedInfo != null && !TextUtils.isEmpty(mSelectedInfo.getSpecialty_id())) { //选择的专业不是空，就是已经选择了专业了
+                if (mApplication.isLogin()) {        //登录了跳转 主页
+                    startActivity(new Intent(this, HomeActivity.class));
+                } else { //没登录 走登录页面
+                    startActivity(new Intent(this, LoginActivity.class).putExtra(JUMP_KEY, SPLASH_TO_LOGIN));
+                }
+            } else {
+                startActivity(new Intent(this, SubjectActivity.class).putExtra(JUMP_KEY, SPLASH_TO_SUB));
+            }
+            finish();
+        });
     }
 
     @Override
@@ -100,16 +119,16 @@ public class AdvertActivity extends BaseSplashActivity {
     }
 
 
-
     private static final String TAG = "AdvertActivity";
+
     @Override
     protected void netSuccess(int whichApi, Object[] params) {
-        switch (whichApi){
+        switch (whichApi) {
             case ApiConfig.TEST_POST:
-                AdvertBean advertBean =  (AdvertBean) params[0];
+                AdvertBean advertBean = (AdvertBean) params[0];
                 String jump_url = advertBean.getResult().getInfo_url();
-                Log.d(TAG, "netSuccess: "+jump_url);
-                GlideUtil.loadImage(iv_advert,jump_url);
+                Log.d(TAG, "netSuccess: " + jump_url);
+                GlideUtil.loadImage(iv_advert, jump_url);
                 time_view.setVisibility(View.VISIBLE);
                 goTime();
                 break;

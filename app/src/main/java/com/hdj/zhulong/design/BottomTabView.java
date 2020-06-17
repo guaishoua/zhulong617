@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.IdRes;
 
 import com.hdj.zhulong.R;
 
@@ -103,10 +104,15 @@ public class BottomTabView extends RelativeLayout {
             usedTabView.get(i).setText(tabContent.get(i));
         }
     }
-
+    private @IdRes
+    int currentId;
     @OnClick({R.id.main_page_tab, R.id.course_tab, R.id.vip_tab, R.id.data_tab, R.id.mine_tab})
     public void onViewClicked(View view) {
         int id = view.getId();
+        if (currentId == id){
+            Log.e(this.getClass().getName(), "onViewClicked: "+"你点击的是已选中的位置" );
+            return;
+        }
         if (id == R.id.main_page_tab) {
             defaultTab = 1;
         } else if (id == R.id.course_tab) {
@@ -119,6 +125,17 @@ public class BottomTabView extends RelativeLayout {
             defaultTab = 5;
         }
         setStyle();
+        if (mOnBottomTabClickCallBack != null) mOnBottomTabClickCallBack.clickTab(defaultTab);
     }
 
+
+    private OnBottomTabClickCallBack mOnBottomTabClickCallBack;
+
+    public void setOnBottomTabClickCallBack(OnBottomTabClickCallBack pOnBottomTabClickCallBack){
+        mOnBottomTabClickCallBack = pOnBottomTabClickCallBack;
+    }
+
+    public interface OnBottomTabClickCallBack{
+        void clickTab(int tab);
+    }
 }
